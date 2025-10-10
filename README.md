@@ -72,7 +72,6 @@ For example, to calculate the chromatic number of a graph:
 
 ```java
 int chromaticNumber = graph.chromaticNumber();
-System.out.println("Chromatic Number: " + chromaticNumber);
 ```
 
 ### Testing
