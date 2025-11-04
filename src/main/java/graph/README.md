@@ -80,6 +80,6 @@ src/main/java/graph/
 
 ## 🧾 License
 
-MIT License — see [root LICENSE](../../LICENSE)
+**Apache License 2.0** — see [root LICENSE](../../../../LICENSE)
 
 ```

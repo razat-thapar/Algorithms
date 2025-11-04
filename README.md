@@ -67,9 +67,9 @@ Contributions are welcome! To add a new algorithm module:
 
 ## ⚖️ License
 
-Licensed under the **MIT License**.
-See [LICENSE](../LICENSE) for details.
-
+This project is licensed under the **Apache License 2.0** — you may freely use, modify, and distribute this code under its terms.
+See the full license text here:
+[📄 Apache License 2.0](https://github.com/razat-thapar/Algorithms/blob/main/LICENSE)
 ---
 
 ## 👤 Author
