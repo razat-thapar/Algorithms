@@ -69,12 +69,16 @@ public double computeWeight(Song s) {
 
 ## 📂 File Structure
 
-```
-src/main/java/music/
- ├── Song.java
- ├── ShuffleManager.java
- ├── WeightCalculator.java
- └── README.md
+```text
+src/
+└── main/
+    └── java/
+        └── music/
+            ├── Main.java
+            ├── Playlist.java
+            ├── Song.java
+            ├── WeightedShuffleEngine.java
+            └── README.md
 ```
 
 ---
@@ -82,9 +86,21 @@ src/main/java/music/
 ## 🧩 Example Usage
 
 ```java
-ShuffleManager shuffle = new ShuffleManager(songs);
-Song next = shuffle.getNextSong();
-shuffle.updateWeight(next, userFeedback);
+// Create playlist
+Playlist playlist = new Playlist();
+playlist.addSong(new Song(1, "Heat Waves", 10, 0));
+playlist.addSong(new Song(2, "Blinding Lights", 7, 1));
+playlist.addSong(new Song(3, "Levitating", 5, 2));
+
+// Initialize the weighted shuffle engine
+WeightedShuffleEngine engine = new WeightedShuffleEngine(playlist);
+
+// Get next song based on dynamic weights
+Song nextSong = engine.getNextSong();
+System.out.println("Now playing: " + nextSong.getTitle());
+
+// Update weight based on user feedback (like/skip/play)
+engine.updateWeight(nextSong, /* userFeedback */);
 ```
 
 ---
