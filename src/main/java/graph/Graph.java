@@ -1,7 +1,9 @@
+package graph;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
- * The Graph class represents a graph data structure with support for both directed and undirected graphs,
+ * The graph.Graph class represents a graph data structure with support for both directed and undirected graphs,
  * as well as weighted and unweighted edges. It provides functionality to build and manipulate graphs
  * using the Builder pattern.
  *
@@ -19,7 +21,7 @@ import java.util.List;
  * - Provides a Builder class for flexible graph construction.
  *
  * Usage:
- * Use the {@link Graph.Builder} class to create instances of the Graph.
+ * Use the {@link Graph.Builder} class to create instances of the graph.Graph.
  */
 
 public class Graph {
@@ -47,7 +49,7 @@ public class Graph {
         // Solution: Binary Search + Backtracking
         // TC: O(logV * V^V) SC: O(V)
         //edge case
-        if(this.hasSelfLoop) return -1; // Graph with self-loop cannot be colored
+        if(this.hasSelfLoop) return -1; // graph.Graph with self-loop cannot be colored
         int left = 1, right = V, ans = V;
         while (left < right) {
             int mid = (left + right) / 2;

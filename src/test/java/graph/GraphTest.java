@@ -1,3 +1,5 @@
+package graph;
+
 public class GraphTest {
     // Add test cases here to validate the chromaticNumber method
     @org.junit.jupiter.api.Test
