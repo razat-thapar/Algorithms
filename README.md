@@ -1,59 +1,44 @@
-```markdown
-# Graph Algorithms in OOP Design
 
-## Overview
+# 🧩 Algorithms in Object-Oriented Design
 
-This repository contains implementations of major graph algorithms written in an object-oriented programming (OOP) style. The code adheres to OOP design principles and patterns to ensure modularity, reusability, and maintainability. The primary focus is on providing a clean and extensible structure for graph-related algorithms.
+Welcome to the **Algorithms Repository**, where each module demonstrates how classical algorithms can be implemented using **Object-Oriented Programming (OOP)** principles.  
+This project focuses on clean architecture, extensibility, and real-world inspired algorithmic applications.
 
-## Features
+---
 
-- **Graph Representation**: 
-  - Supports both directed and undirected graphs.
-  - Handles weighted and unweighted edges.
-  - Self-loops and isolated vertices are supported.
-  
-- **Algorithms**:
-  - **Chromatic Number Calculation**: Determines the minimum number of colors required to color a graph such that no two adjacent vertices share the same color.
-  - Additional algorithms can be added in the future.
+## 📚 Table of Contents
 
-- **Builder Pattern**: 
-  - A flexible `Builder` class is provided to construct graph instances with various configurations (e.g., directed, weighted).
+1. [Graph Algorithms](#1-graph-algorithms)
+2. [Music Playlist Shuffle Algorithm](#2-music-playlist-shuffle-algorithm)
+3. *(More coming soon — Sorting, Dynamic Programming, etc.)*
 
-- **OOP Design Principles**:
-  - Encapsulation: Graph and its components (e.g., edges) are encapsulated in classes.
-  - Modularity: Each algorithm is implemented as a separate method or class.
-  - Extensibility: The design allows for easy addition of new algorithms or graph features.
+---
 
-## Getting Started
+## 1️⃣ Graph Algorithms
 
-### Prerequisites
+### 📘 Overview
 
-- **Java**: Ensure you have Java 8 or later installed.
-- **Maven**: This project uses Maven for dependency management and build automation.
+This package implements fundamental **Graph Algorithms** in an **object-oriented design**.  
+It provides reusable and modular graph components that can be easily extended to support new algorithms.
 
-### Installation
+#### ✨ Features
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/graph-algorithms-oop.git
-   cd graph-algorithms-oop
-   ```
+- **Graph Representation**
+  - Directed / Undirected graphs
+  - Weighted / Unweighted edges
+  - Supports self-loops and isolated vertices
 
-2. Build the project using Maven:
-   ```bash
-   mvn clean install
-   ```
+- **Implemented Algorithms**
+  - **Chromatic Number Calculation** — Minimum colors required so that no adjacent vertices share a color
 
-3. Run the tests to ensure everything is working:
-   ```bash
-   mvn test
-   ```
+- **OOP Design Principles**
+  - *Encapsulation* — Graph and its components (e.g., vertices, edges) are independent entities  
+  - *Modularity* — Each algorithm lives in its own class or method  
+  - *Extensibility* — Easily add new graph algorithms
 
-### Usage
+---
 
-#### Creating a Graph
-
-You can create a graph using the `Graph.Builder` class:
+### 🧩 Example
 
 ```java
 Graph graph = new Graph.Builder(4)
@@ -64,62 +49,166 @@ Graph graph = new Graph.Builder(4)
     .addEdge(2, 3)
     .addEdge(3, 0)
     .build();
-```
 
-#### Running Algorithms
-
-For example, to calculate the chromatic number of a graph:
-
-```java
 int chromaticNumber = graph.chromaticNumber();
-```
+````
 
-### Testing
+---
 
-Unit tests are provided to validate the functionality of the graph algorithms. The tests cover:
+### 🧪 Testing
 
-- Happy paths (e.g., bipartite graphs, cyclic graphs).
-- Edge cases (e.g., graphs with self-loops, disconnected components).
-
-Run the tests using Maven:
 ```bash
 mvn test
 ```
 
-### Contributing
+Tests include:
 
-Contributions are welcome! If you'd like to add new algorithms or improve the existing code, please follow these steps:
+* Bipartite and cyclic graphs
+* Edge cases: self-loops, disconnected graphs
 
-1. Fork the repository.
-2. Create a new branch for your feature:
+---
+
+### 🗺️ Roadmap
+
+* Shortest Path Algorithms — Dijkstra, Bellman-Ford, Floyd-Warshall
+* Minimum Spanning Tree — Prim, Kruskal
+* Topological Sorting
+* Strongly Connected Components — Tarjan’s Algorithm
+* Dynamic graph updates
+
+---
+
+## 2️⃣ Music Playlist Shuffle Algorithm
+
+### 📘 Overview
+
+This module implements a **dynamic playlist shuffle algorithm**, inspired by YouTube Music and Spotify.
+It uses a **weighted priority mechanism** with **lazy deletion** to ensure a fair and intelligent shuffle experience.
+
+---
+
+### 🧠 Core Concept
+
+Each song is assigned a **dynamic weight**, influenced by behavioral and contextual factors:
+
+| Factor             | Description                                   |
+| ------------------ | --------------------------------------------- |
+| ⏱️ Recency         | Lower weight if recently played               |
+| ❤️ Likes           | Higher weight for liked/favorite songs        |
+| 🔁 Skips           | Penalized weight for frequently skipped songs |
+| 🔊 Completion Rate | Rewards songs that are played fully           |
+| 🕓 Time of Day     | Adjusts weight based on context (optional)    |
+
+---
+
+### ⚙️ Algorithm Workflow
+
+1. **Initialize** a `PriorityQueue<Song>` storing up to 1000 songs
+
+    * If playlist ≤ 1000 → use all
+    * If playlist > 1000 → keep top 50 by weight
+
+2. **Select Next Song**
+
+    * Poll top element from the heap (highest weight)
+
+3. **Recompute Weight Dynamically**
+
+    * After playback/skip, recalculate and reinsert
+
+4. **Lazy Deletion**
+
+    * If an old entry becomes stale (outdated weight), skip it upon retrieval instead of removing all duplicates.
+
+---
+
+### 🧩 Example Code
+
+```java
+public class Song {
+    int id;
+    double weight;
+    int likes, skips, plays;
+    long lastPlayedTimestamp;
+}
+
+PriorityQueue<Song> pq = new PriorityQueue<>(
+    (a, b) -> Double.compare(b.weight, a.weight)
+);
+
+public double computeWeight(Song s) {
+    return s.likes * 2.0 - s.skips * 1.5
+           + s.plays * 0.1
+           - (System.currentTimeMillis() - s.lastPlayedTimestamp) * 0.0001;
+}
+```
+
+---
+
+### 🧮 Complexity
+
+| Operation       | Time     | Description                   |
+| --------------- | -------- | ----------------------------- |
+| Insert / Update | O(log n) | Maintain max-heap             |
+| Poll            | O(log n) | Fetch next top song           |
+| Weight Update   | O(1)     | Recompute based on attributes |
+
+---
+
+### 🚀 Future Work
+
+* Context-based shuffle (mood, time, genre)
+* Proportional randomization (Fenwick / Segment Tree)
+* Exploration vs exploitation (ε-greedy strategy)
+
+---
+
+### 📂 Folder Structure
+
+```
+src/main/java/
+ ├── graph/
+ │    ├── Graph.java
+ │    ├── Builder.java
+ │    └── ChromaticNumber.java
+ │
+ └── music/
+      ├── Song.java
+      ├── ShuffleManager.java
+      ├── WeightCalculator.java
+      └── README.md
+```
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo
+2. Create your branch
+
    ```bash
    git checkout -b feature-name
    ```
-3. Commit your changes:
+3. Commit and push
+
    ```bash
    git commit -m "Add feature description"
-   ```
-4. Push to your branch:
-   ```bash
    git push origin feature-name
    ```
-5. Open a pull request.
+4. Submit a pull request 🎉
 
-### Roadmap
+---
 
-- Add more graph algorithms:
-    - Shortest Path (Dijkstra, Bellman-Ford, Floyd-Warshall).
-    - Minimum Spanning Tree (Prim, Kruskal).
-    - Topological Sorting.
-    - Strongly Connected Components (Tarjan's Algorithm).
-- Improve test coverage.
-- Add support for dynamic graph updates.
+## ⚖️ License
 
-### License
+This project is licensed under the **MIT License** — see the `LICENSE` file for details.
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+---
 
-### Contact
+## 👤 Author
 
-For any questions or suggestions, feel free to open an issue or contact the repository owner.
-```
+**Razat Aggarwal**
+Software Engineer | Algorithm Enthusiast | DSA Practitioner
+[GitHub Profile](https://github.com/razat-thapar)
+
+---
